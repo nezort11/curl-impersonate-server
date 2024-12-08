@@ -1,0 +1,43 @@
+{
+  "name": "serverless-curl-impersonate",
+  "volta": {
+    "node": "20.18.1"
+  },
+  "packageManager": "pnpm@8.3.1",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "./build/app.js",
+  "scripts": {
+    "command:node": "DEBUG='*' node --experimental-specifier-resolution=node --no-warnings",
+    "command:ts": "pnpm command:node --inspect --loader ts-node/esm",
+    "app:run": "DEBUG_ENV=true pnpm command:ts ./src/app.ts",
+    "app:deamon": "DEBUG_ENV=true pnpm nodemon --exec \"pnpm command:ts\" --watch \"./.env\" --watch \"./src\" ./src/app.ts",
+    "dev": "NODE_ENV=development pnpm app:deamon",
+    "dev:prod": "NODE_ENV=production pnpm app:deamon",
+    "start": "NODE_ENV=production pnpm command:node .",
+    "yc:registry:create": "source ./pre-env.sh && yc container registry create --name $REGISTRY_NAME",
+    "yc:registry:get": "source ./pre-env.sh && yc container registry get $REGISTRY_NAME",
+    "yc:registry:configure": "yc container registry configure-docker",
+    "yc:image:ci": "source ./pre-image.sh && docker buildx build --platform linux/amd64 --push -t $IMAGE_NAME .",
+    "yc:container:create": "source ./pre-env.sh && yc serverless container create --name $CONTAINER_NAME",
+    "yc:container:print": "source ./pre-container.sh && echo \"Your serverless container is available at https://$CONTAINER_ID.containers.yandexcloud.net/\"",
+    "yc:container:configure": "source ./pre-image.sh && yc serverless container revision deploy --container-name $CONTAINER_NAME --image $IMAGE_NAME --cores 1 --memory 1GB --concurrency 1 --execution-timeout 30s --service-account-id $SERVICE_ACCOUNT_ID",
+    "yc:ci": "pnpm yc:image:ci && pnpm yc:container:print"
+  },
+  "dependencies": {
+    "debug": "^4.3.4",
+    "dotenv": "16.0.3",
+    "express": "4.18.2"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.12",
+    "@types/express": "4.17.17",
+    "@types/node": "18.15.3",
+    "nodemon": "2.0.20",
+    "ts-node": "10.9.1",
+    "typescript": "5.4.5",
+    "yarnhook": "0.6.0"
+  },
+}
