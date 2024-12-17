@@ -1,4 +1,4 @@
-# Serverless curl-impersonate (express api docker image)
+# Serverless curl-impersonate (serverless + docker + express + proxy + curl-impersonate)
 
 Serverless HTTP proxy server configuration for curl-impersonate
 
@@ -10,3 +10,10 @@ pnpm yc:registry:configure
 
 pnpm yc:ci
 ```
+
+## Example
+
+Example of the deployed curl-impersonate proxy
+
+https://bba5fcsqp561u8p04cfd.containers.yandexcloud.net/https://google.com
+
