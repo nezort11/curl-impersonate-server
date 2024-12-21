@@ -1,6 +1,11 @@
-# Serverless curl-impersonate (serverless + docker + express + proxy + curl-impersonate)
+# Impersonated proxy server (serverless-curl-impersonate) (serverless + docker + express + proxy + curl-impersonate)
 
-Serverless HTTP proxy server configuration for curl-impersonate
+Impersonated proxy server:
+
+- bypass TLS fingerprinting anti-bot protection https://dev.to/logrocket/using-curl-impersonate-in-nodejs-to-avoid-blocks-49n2
+- written in Nodejs/Express
+- see working Docker image
+- see example of serverless configuration
 
 ## Getting started
 
