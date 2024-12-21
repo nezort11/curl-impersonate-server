@@ -1,5 +1,4 @@
 import express from "express";
-// @ts-expect-error no types
 import { Curl } from "curl-wrap";
 import { PORT } from "./env";
 
