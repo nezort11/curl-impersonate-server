@@ -3,8 +3,11 @@ export {};
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
+      ENV_FILE_LOADED: "true" | undefined;
+
       NODE_ENV: "development" | "production";
-      DEBUG: "true" | "false";
+      DEBUG: "*";
+      DEBUG_ENV: "true" | undefined;
     }
   }
 }
