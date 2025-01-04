@@ -32,7 +32,7 @@ jobs:
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
           revision-service-account-id: ${{ vars.SERVICE_ACCOUNT_ID }}
-          revision-image-url: $IMAGE_NAME
+          revision-image-url: ${{ env.IMAGE_NAME }}
           container-name: ${{ vars.CONTAINER_NAME }}
           folder-id: ${{ vars.FOLDER_ID }}
           revision-cores: 1
