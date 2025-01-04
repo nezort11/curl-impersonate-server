@@ -16,15 +16,11 @@ jobs:
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
 
-      - name: Build, tag, and push image to Yandex Cloud Container Registry
-        # env:
-        #   CR_REGISTRY: ${{ vars.REGISTRY_ID }}
-        #   CR_REPOSITORY: ${{ vars.CONTAINER_NAME }}
-        #   IMAGE_TAG: ${{ github.sha }}
-        run: |
-          echo "REGISTRY_ID: '${{ vars.REGISTRY_ID }}'"
-          echo "CONTAINER_NAME: '${{ vars.CONTAINER_NAME }}'"
+      - name: Check out the code
+        uses: actions/checkout@v3
 
+      - name: Build, tag, and push image to Yandex Cloud Container Registry
+        run: |
           IMAGE_NAME="cr.yandex/${{ vars.REGISTRY_ID }}/${{ vars.CONTAINER_NAME }}:${{ github.sha }}"
           docker build -t $IMAGE_NAME .
           docker push $IMAGE_NAME
