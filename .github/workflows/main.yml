@@ -17,13 +17,14 @@ jobs:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
 
       - name: Build, tag, and push image to Yandex Cloud Container Registry
-        env:
-          CR_REGISTRY: ${{ env.REGISTRY_ID }}
-          CR_REPOSITORY: ${{ env.CONTAINER_NAME }}
-          IMAGE_TAG: ${{ github.sha }}
+        # env:
+        #   CR_REGISTRY: ${{ env.REGISTRY_ID }}
+        #   CR_REPOSITORY: ${{ env.CONTAINER_NAME }}
+        #   IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
-          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
+          IMAGE_NAME="cr.yandex/${{ env.REGISTRY_ID }}/${{ env.CONTAINER_NAME }}:${{ github.sha }}"
+          docker build -t $IMAGE_NAME .
+          docker push $IMAGE_NAME
 
       - name: Deploy Serverless Container
         id: deploy-sls-container
