@@ -36,7 +36,7 @@ WORKDIR /app
 
 COPY ./package.json ./package.json
 COPY ./pnpm-lock.yaml ./pnpm-lock.yaml
-COPY ./patches ./patches
+# COPY ./patches ./patches
 
 # Install dependencies
 RUN pnpm install

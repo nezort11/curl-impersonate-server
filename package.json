@@ -27,10 +27,10 @@
     "yc:registry:configure": "yc container registry configure-docker",
     "yc:image:build": "source ./scripts/pre-image.sh && docker buildx build --load --platform linux/amd64 --tag $IMAGE_NAME .",
     "yc:image:push": "source ./scripts/pre-image.sh && docker image push $IMAGE_NAME",
-    "yc:container:create": "source ./scripts/pre-env.sh && yc serverless container create --name $CONTAINER_NAME",
+    "yc:container:create": "source ./scripts/projectname-env.sh && yc serverless container create --name $PACKAGE_NAME",
     "yc:container:print": "source ./scripts/pre-container.sh && echo \"Your serverless container is available at https://$CONTAINER_ID.containers.yandexcloud.net/\"",
-    "yc:container:configure": "source ./scripts/pre-image.sh && yc serverless container revision deploy --container-name $CONTAINER_NAME --image $IMAGE_NAME --cores 1 --memory 1GB --concurrency 1 --execution-timeout 30s --service-account-id $SERVICE_ACCOUNT_ID",
-    "yc:ci": "pnpm yc:image:build && pnpm yc:image:push && pnpm yc:container:configure && pnpm yc:container:print",
+    "yc:container:deploy": "source ./scripts/pre-image.sh && yc serverless container revision deploy --container-name $PACKAGE_NAME --image $IMAGE_NAME --cores 1 --memory 1GB --concurrency 1 --execution-timeout 30s --service-account-id $SERVICE_ACCOUNT_ID",
+    "yc:deploy": "pnpm yc:image:build && pnpm yc:image:push && pnpm yc:container:deploy && pnpm yc:container:print",
     "docker:image:clean": "docker image rm -f $(docker image ls -aqf dangling=true) || echo ''",
   },
   "dependencies": {

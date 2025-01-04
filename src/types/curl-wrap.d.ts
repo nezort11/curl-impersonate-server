@@ -1,5 +1,6 @@
 import { CookieJar } from "tough-cookie";
 
+// ambient module declarations
 declare module "curl-wrap" {
   interface CurlOptions {
     method?: string; // HTTP method (e.g., GET, POST)
