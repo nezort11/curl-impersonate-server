@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: cr.yandex/${{ vars.REGISTRY_ID }}/${{ vars.CONTAINER_NAME }}:${{ github.sha }}
 
     steps:
       - name: Login to Yandex Cloud Container Registry
@@ -21,7 +23,6 @@ jobs:
 
       - name: Build, tag, and push image to Yandex Cloud Container Registry
         run: |
-          IMAGE_NAME="cr.yandex/${{ vars.REGISTRY_ID }}/${{ vars.CONTAINER_NAME }}:${{ github.sha }}"
           docker build -t $IMAGE_NAME .
           docker push $IMAGE_NAME
 
@@ -30,12 +31,12 @@ jobs:
         uses: yc-actions/yc-sls-container-deploy@v2
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
-          revision-service-account-id: ajeqnasj95o7********
-          revision-image-url: cr.yandex/crp00000000000000000/my-cr-repo:${{ github.sha }}
-          container-name: yc-action-demo
-          folder-id: bbajn5q2d74c********
+          revision-service-account-id: ${{ vars.SERVICE_ACCOUNT_ID }}
+          revision-image-url: $IMAGE_NAME
+          container-name: ${{ vars.CONTAINER_NAME }}
+          folder-id: ${{ vars.FOLDER_ID }}
           revision-cores: 1
-          revision-memory: 512Mb
+          revision-memory: 2048Mb
           revision-core-fraction: 100
-          revision-concurrency: 8
-          revision-execution-timeout: 10
+          revision-concurrency: 2
+          revision-execution-timeout: 60
